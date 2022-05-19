@@ -1,5 +1,5 @@
 package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
 public interface TaxCalculator {
-    InvoiceLine calculateTax(RequestItem item);
+    Tax calculateTax(RequestItem item);
 }

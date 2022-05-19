@@ -3,9 +3,9 @@ package pl.com.bottega.ecommerce.sales.domain.invoicing;
 import java.math.BigDecimal;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class DefaultTax implements TaxCalculator {
+public class DefaultTaxCalculator implements TaxCalculator {
     @Override
-    public InvoiceLine calculateTax(RequestItem item) {
+    public Tax calculateTax(RequestItem item) {
         Money net = item.getTotalCost();
         BigDecimal ratio = null;
         String desc = null;
@@ -28,10 +28,6 @@ public class DefaultTax implements TaxCalculator {
                 throw new IllegalArgumentException(item.getProductData().getType() + " not handled");
         }
 
-        Money taxValue = net.multiplyBy(ratio);
-        Tax tax = new Tax(taxValue, desc);
-        InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
-        
-        return invoiceLine;
+        return new Tax(net.multiplyBy(ratio), desc);
     }
 }
